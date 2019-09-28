@@ -1,0 +1,9 @@
+name: ShulkerPacks
+version: 1.4.1
+main: me.darkolythe.shulkerpacks.ShulkerPacks
+api-version: 1.13
+
+permissions:
+  shulkerpacks.use:
+    description: gives player permission to open shulker boxes in their inventory
+    default: op
