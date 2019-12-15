@@ -16,10 +16,10 @@ public final class ShulkerPacks extends JavaPlugin {
 
     public Map<UUID, ItemStack> openshulkers = new HashMap<>();
     public Map<UUID, Inventory> openinventories = new HashMap<>();
-    public boolean canopeninchests;
+    public boolean canopeninchests = true;
     public List<String> blacklist = new ArrayList<>();
-    public String defaultname;
-    public boolean shiftclicktoopen;
+    public String defaultname = ChatColor.BLUE + "Shulker Pack";
+    public boolean shiftclicktoopen = false;
 
     @Override
     public void onEnable() {
@@ -32,8 +32,6 @@ public final class ShulkerPacks extends JavaPlugin {
         blacklist = getConfig().getStringList("blacklistedinventories");
         if (getConfig().getString("defaultname") != null) {
             defaultname = ChatColor.translateAlternateColorCodes('&', getConfig().getString("defaultname"));
-        } else {
-            defaultname = ChatColor.BLUE + "Shulker Pack";
         }
         shiftclicktoopen = getConfig().getBoolean("shiftclicktoopen");
 
