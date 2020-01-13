@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
@@ -59,6 +60,10 @@ public class ShulkerListener implements Listener {
                 return;
             }
 
+            if (!main.canopeninenderchest && type == InventoryType.ENDER_CHEST) {
+                return;
+            }
+
             for (String str: main.blacklist) {
                 if (ChatColor.translateAlternateColorCodes('&', str).equals(player.getOpenInventory().getTitle())) {
                     return;
@@ -102,6 +107,15 @@ public class ShulkerListener implements Listener {
             if (event.getAction() == Action.RIGHT_CLICK_AIR) {
                 ItemStack item = event.getItem();
                 openInventoryIfShulker(item, event.getPlayer());
+            }
+        }
+    }
+
+    @EventHandler
+    public void onShulkerPlace(BlockPlaceEvent event) {
+        if (event.getBlockPlaced().getType().toString().contains("SHULKER_BOX")) {
+            if (!main.canplaceshulker) {
+                event.setCancelled(true);
             }
         }
     }

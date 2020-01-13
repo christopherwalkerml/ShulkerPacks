@@ -1,5 +1,7 @@
 blacklistedinventories: ["&4&lMineXChange", "test inventory"]
 canopeninchests: true
+canopeninenderchest: true
+canplaceshulker: true
 defaultname: "&9Shulker Pack"
 shiftclicktoopen: false
 #shift click to open applies to both ingame and in inventory

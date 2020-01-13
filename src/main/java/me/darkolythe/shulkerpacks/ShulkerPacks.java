@@ -10,16 +10,18 @@ import java.util.*;
 
 public final class ShulkerPacks extends JavaPlugin {
 
-    public ShulkerListener shulkerlistener;
+    ShulkerListener shulkerlistener;
 
-    public String prefix = ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "[" + ChatColor.BLUE.toString() + "ShulkerPacks" + ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "] ";
+    String prefix = ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "[" + ChatColor.BLUE.toString() + "ShulkerPacks" + ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "] ";
 
-    public Map<UUID, ItemStack> openshulkers = new HashMap<>();
-    public Map<UUID, Inventory> openinventories = new HashMap<>();
-    public boolean canopeninchests = true;
-    public List<String> blacklist = new ArrayList<>();
-    public String defaultname = ChatColor.BLUE + "Shulker Pack";
-    public boolean shiftclicktoopen = false;
+    Map<UUID, ItemStack> openshulkers = new HashMap<>();
+    Map<UUID, Inventory> openinventories = new HashMap<>();
+    boolean canopeninchests = true;
+    List<String> blacklist = new ArrayList<>();
+    String defaultname = ChatColor.BLUE + "Shulker Pack";
+    boolean shiftclicktoopen = false;
+    boolean canopeninenderchest = true;
+    boolean canplaceshulker = true;
 
     /*
     Sets up the plugin
@@ -32,6 +34,8 @@ public final class ShulkerPacks extends JavaPlugin {
 
         saveDefaultConfig();
         canopeninchests = getConfig().getBoolean("canopeninchests");
+        canopeninenderchest = getConfig().getBoolean("canopeninenderchest");
+        canplaceshulker = getConfig().getBoolean("canplaceshulker");
         blacklist = getConfig().getStringList("blacklistedinventories");
         if (getConfig().getString("defaultname") != null) {
             defaultname = ChatColor.translateAlternateColorCodes('&', getConfig().getString("defaultname"));
