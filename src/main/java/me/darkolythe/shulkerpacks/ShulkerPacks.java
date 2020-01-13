@@ -21,6 +21,9 @@ public final class ShulkerPacks extends JavaPlugin {
     public String defaultname = ChatColor.BLUE + "Shulker Pack";
     public boolean shiftclicktoopen = false;
 
+    /*
+    Sets up the plugin
+     */
     @Override
     public void onEnable() {
         shulkerlistener = new ShulkerListener(this);
@@ -40,6 +43,9 @@ public final class ShulkerPacks extends JavaPlugin {
         System.out.println(prefix + ChatColor.GREEN + "ShulkerPacks has been enabled!");
     }
 
+    /*
+    Doesnt do much. Just says a message
+     */
     @Override
     public void onDisable() {
         System.out.println(prefix + ChatColor.RED + "ShulkerPacks has been disabled!");

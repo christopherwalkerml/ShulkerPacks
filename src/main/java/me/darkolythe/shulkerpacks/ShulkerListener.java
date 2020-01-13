@@ -21,6 +21,9 @@ public class ShulkerListener implements Listener {
         this.main = plugin; //set it equal to an instance of main
     }
 
+    /*
+    Saves the shulker on inventory drag if its open
+     */
     @EventHandler
     public void onInventoryDrag(InventoryDragEvent event) {
         if (event.getWhoClicked() instanceof Player) {
@@ -34,6 +37,9 @@ public class ShulkerListener implements Listener {
         }
     }
 
+    /*
+    Opens the shulker if its not in a weird inventory, then saves it
+     */
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
         if (event.getWhoClicked() instanceof Player) {
@@ -73,6 +79,9 @@ public class ShulkerListener implements Listener {
         }
     }
 
+    /*
+    Saves the shulker if its open, then removes the current open shulker from the player data
+     */
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent event) {
         if (event.getPlayer() instanceof Player) {
@@ -84,6 +93,9 @@ public class ShulkerListener implements Listener {
         }
     }
 
+    /*
+    Opens the shulker if the air was clicked with one
+     */
     @EventHandler
     public void onClickAir(PlayerInteractEvent event) {
         if ((!main.shiftclicktoopen || event.getPlayer().isSneaking())) {
@@ -94,6 +106,9 @@ public class ShulkerListener implements Listener {
         }
     }
 
+    /*
+    Saves the shulker data in the itemmeta
+     */
     public boolean saveShulker(Player player, String title) {
         if (main.openshulkers.containsKey(player.getUniqueId())) {
             if (title.equals(main.defaultname) || (main.openshulkers.get(player.getUniqueId()).hasItemMeta() &&
@@ -115,6 +130,9 @@ public class ShulkerListener implements Listener {
         return false;
     }
 
+    /*
+    Opens the shulker inventory with the contents of the shulker
+     */
     public boolean openInventoryIfShulker(ItemStack item, Player player) {
         if (player.hasPermission("shulkerpacks.use")) {
             if (item != null) {
