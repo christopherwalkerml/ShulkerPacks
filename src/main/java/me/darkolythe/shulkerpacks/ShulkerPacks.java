@@ -22,6 +22,7 @@ public final class ShulkerPacks extends JavaPlugin {
     boolean shiftclicktoopen = false;
     boolean canopeninenderchest = true;
     boolean canplaceshulker = true;
+    boolean canopeninair = true;
 
     /*
     Sets up the plugin
@@ -37,6 +38,7 @@ public final class ShulkerPacks extends JavaPlugin {
         canopeninenderchest = getConfig().getBoolean("canopeninenderchest");
         canplaceshulker = getConfig().getBoolean("canplaceshulker");
         blacklist = getConfig().getStringList("blacklistedinventories");
+        canopeninair = getConfig().getBoolean("canopeninair");
         if (getConfig().getString("defaultname") != null) {
             defaultname = ChatColor.translateAlternateColorCodes('&', getConfig().getString("defaultname"));
         }

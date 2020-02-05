@@ -1,7 +1,10 @@
 blacklistedinventories: ["&4&lMineXChange", "test inventory"]
-canopeninchests: true
-canopeninenderchest: true
-canplaceshulker: true
+
+canopeninair: true            #false will prevent the user from opening shulkerboxes by clicking the air
+canopeninchests: true         #false will prevent users from opening shulkerboxes in chests
+canopeninenderchest: true     #false will prevent users from opening shulkerboxes in enderchests
+canplaceshulker: true         #false will prevent users from placing shulkerboxes by accident
+
 defaultname: "&9Shulker Pack"
 shiftclicktoopen: false
 #shift click to open applies to both ingame and in inventory

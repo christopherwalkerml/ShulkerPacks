@@ -2,6 +2,7 @@ package me.darkolythe.shulkerpacks;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.ShulkerBox;
 import org.bukkit.entity.Player;
@@ -103,10 +104,12 @@ public class ShulkerListener implements Listener {
      */
     @EventHandler
     public void onClickAir(PlayerInteractEvent event) {
-        if ((!main.shiftclicktoopen || event.getPlayer().isSneaking())) {
-            if (event.getAction() == Action.RIGHT_CLICK_AIR) {
-                ItemStack item = event.getItem();
-                openInventoryIfShulker(item, event.getPlayer());
+        if (main.canopeninair && (event.getClickedBlock() == null || event.getClickedBlock().getType() == Material.AIR)) {
+            if ((!main.shiftclicktoopen || event.getPlayer().isSneaking())) {
+                if (event.getAction() == Action.RIGHT_CLICK_AIR) {
+                    ItemStack item = event.getItem();
+                    openInventoryIfShulker(item, event.getPlayer());
+                }
             }
         }
     }
