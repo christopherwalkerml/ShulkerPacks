@@ -2,6 +2,7 @@ package me.darkolythe.shulkerpacks;
 
 import org.bstats.bukkit.Metrics;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -23,6 +24,7 @@ public final class ShulkerPacks extends JavaPlugin {
     boolean canopeninenderchest = true;
     boolean canplaceshulker = true;
     boolean canopeninair = true;
+    Map<UUID, ItemStack> thrownItem = new HashMap<>();
 
     /*
     Sets up the plugin
@@ -55,5 +57,18 @@ public final class ShulkerPacks extends JavaPlugin {
     @Override
     public void onDisable() {
         System.out.println(prefix + ChatColor.RED + "ShulkerPacks has been disabled!");
+    }
+
+    ItemStack getThrownItem(Player player) {
+        if (thrownItem.containsKey(player.getUniqueId())) {
+            return thrownItem.get(player.getUniqueId());
+        } else {
+            thrownItem.put(player.getUniqueId(), null);
+            return thrownItem.get(player.getUniqueId());
+        }
+    }
+
+    void putThrownItem(Player player, ItemStack item) {
+        thrownItem.put(player.getUniqueId(), item);
     }
 }
