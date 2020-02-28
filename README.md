@@ -1,7 +1,7 @@
 # ShulkerPacks
 open shulker boxes without placing them down
 
-![Image of Title](https://imgur.com/iy6Ix5C)
+![Image of Title](https://imgur.com/a/G4mgBkk)
 
 ###Description:
 Tired of having to put down your shulker to open it? Or maybe youre in claimed land? Now you can right click the shulker in your inventory to open it, or just right click the air with it in your main hand!
@@ -25,6 +25,6 @@ shiftclicktoopen: false
 The fastest and easiest way to contact me:
 Discord: https://discord.gg/AET9mWj
 
-[Image of Boost](https://www.spigotmc.org/attachments/info-png.480411/?temp_hash=5760a846980a931974a77950d918d34f)
+![Image of Boost](https://imgur.com/gallery/fx0GJ8N)
 
 Can conflict with auto-sorting inventory plugins
