@@ -2,6 +2,7 @@ package me.darkolythe.shulkerpacks;
 
 import org.bstats.bukkit.Metrics;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -63,7 +64,7 @@ public final class ShulkerPacks extends JavaPlugin {
         if (thrownItem.containsKey(player.getUniqueId())) {
             return thrownItem.get(player.getUniqueId());
         } else {
-            thrownItem.put(player.getUniqueId(), null);
+            thrownItem.put(player.getUniqueId(), new ItemStack(Material.AIR));
             return thrownItem.get(player.getUniqueId());
         }
     }
