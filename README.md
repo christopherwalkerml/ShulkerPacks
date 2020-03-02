@@ -3,15 +3,15 @@ open shulker boxes without placing them down
 
 ![Image of Title](https://imgur.com/gallery/i0CP79J)
 
-###Description:
+### Description:
 Tired of having to put down your shulker to open it? Or maybe youre in claimed land? Now you can right click the shulker in your inventory to open it, or just right click the air with it in your main hand!
 
 This also works in chests (GUIs can be blacklisted with their inventory name in the config)
 
-###Permissions:
+### Permissions:
 shulkerpacks.use (lets the player use shulker packs)
 
-###Config:
+### Config:
 blacklistedinventories: ["&4&lMineXChange", "test inventory"]
 
 canopeninair: true #false will prevent the user from opening shulkerboxes by clicking the air
@@ -22,7 +22,7 @@ canplaceshulker: true #false will prevent users from placing shulkerboxes by acc
 defaultname: "&9Shulker Pack"
 shiftclicktoopen: false
 
-The fastest and easiest way to contact me:
+__The fastest and easiest way to contact me:__
 Discord: https://discord.gg/AET9mWj
 
 ![Image of Boost](https://imgur.com/gallery/fx0GJ8N)
