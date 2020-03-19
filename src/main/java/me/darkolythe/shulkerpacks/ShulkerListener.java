@@ -11,11 +11,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.*;
-import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BlockStateMeta;
+
+import java.util.UUID;
 
 public class ShulkerListener implements Listener {
 
@@ -47,9 +48,15 @@ public class ShulkerListener implements Listener {
      */
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
+        if (checkIfOpen(event.getCurrentItem())) {
+            if (event.getClick() != ClickType.RIGHT) {
+                event.setCancelled(true);
+                return;
+            }
+        }
         if (event.getWhoClicked() instanceof Player && event.getClickedInventory() != null) {
             Player player = (Player) event.getWhoClicked();
-            if (event.getCurrentItem() != null && (main.openshulkers.containsKey(player.getUniqueId()) && event.getCurrentItem().equals(main.openshulkers.get(player.getUniqueId())))) {
+            if (event.getCurrentItem() != null && (main.openshulkers.containsKey(player) && event.getCurrentItem().equals(main.openshulkers.get(player)))) {
                 event.setCancelled(true);
                 return;
             }
@@ -100,7 +107,7 @@ public class ShulkerListener implements Listener {
             if (saveShulker(player, player.getOpenInventory().getTitle())) {
                 player.playSound(player.getLocation(), Sound.BLOCK_SHULKER_BOX_CLOSE, 1, 1);
             }
-            main.openshulkers.remove(player.getUniqueId());
+            main.openshulkers.remove(player);
         }
     }
 
@@ -133,29 +140,49 @@ public class ShulkerListener implements Listener {
      */
     public boolean saveShulker(Player player, String title) {
         try {
-            if (main.openshulkers.containsKey(player.getUniqueId())) {
-                if (title.equals(main.defaultname) || (main.openshulkers.get(player.getUniqueId()).hasItemMeta() &&
-                        main.openshulkers.get(player.getUniqueId()).getItemMeta().hasDisplayName() &&
-                        (main.openshulkers.get(player.getUniqueId()).getItemMeta().getDisplayName().equals(title)))) {
-                    ItemStack item = main.openshulkers.get(player.getUniqueId());
+            if (main.openshulkers.containsKey(player)) {
+                if (title.equals(main.defaultname) || (main.openshulkers.get(player).hasItemMeta() &&
+                        main.openshulkers.get(player).getItemMeta().hasDisplayName() &&
+                        (main.openshulkers.get(player).getItemMeta().getDisplayName().equals(title)))) {
+                    ItemStack item = main.openshulkers.get(player);
                     if (item != null) {
                         BlockStateMeta meta = (BlockStateMeta) item.getItemMeta();
                         ShulkerBox shulker = (ShulkerBox) meta.getBlockState();
                         shulker.getInventory().setContents(main.openinventories.get(player.getUniqueId()).getContents());
                         meta.setBlockState(shulker);
                         item.setItemMeta(meta);
-                        main.openshulkers.put(player.getUniqueId(), item);
-                        player.updateInventory();
+                        main.openshulkers.put(player, item);
+                        updateAllInventories(main.openshulkers.get(player));
                         return true;
                     }
                 }
             }
         } catch (Exception e) {
-            main.openshulkers.remove(player.getUniqueId());
+            main.openshulkers.remove(player);
             player.closeInventory();
             return false;
         }
         return false;
+    }
+
+    private boolean checkIfOpen(ItemStack shulker) {
+        for (ItemStack i : main.openshulkers.values()) {
+            if (i.equals(shulker)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void updateAllInventories(ItemStack item) {
+        for (Player p : main.openshulkers.keySet()) {
+            if (main.openshulkers.get(p).equals(item)) {
+                BlockStateMeta meta = (BlockStateMeta) item.getItemMeta();
+                ShulkerBox shulker = (ShulkerBox) meta.getBlockState();
+                p.getOpenInventory().getTopInventory().setContents(shulker.getInventory().getContents());
+                p.updateInventory();
+            }
+        }
     }
 
     /*
@@ -186,7 +213,7 @@ public class ShulkerListener implements Listener {
                                             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(main, new Runnable() {
                                                 @Override
                                                 public void run() {
-                                                    main.openshulkers.put(player.getUniqueId(), item);
+                                                    main.openshulkers.put(player, item);
                                                     main.openinventories.put(player.getUniqueId(), player.getOpenInventory().getTopInventory());
                                                 }
                                             }, 1);
