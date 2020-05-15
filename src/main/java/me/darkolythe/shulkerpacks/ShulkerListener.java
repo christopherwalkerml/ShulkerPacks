@@ -11,12 +11,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.*;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BlockStateMeta;
-
-import java.util.UUID;
 
 public class ShulkerListener implements Listener {
 
@@ -108,6 +107,21 @@ public class ShulkerListener implements Listener {
                 player.playSound(player.getLocation(), Sound.BLOCK_SHULKER_BOX_CLOSE, 1, 1);
             }
             main.openshulkers.remove(player);
+        }
+    }
+
+    @EventHandler
+    public void onItemDrop(PlayerDropItemEvent event) {
+        ItemStack item = event.getItemDrop().getItemStack();
+        Player player = event.getPlayer();
+        if (item.getType().toString().contains("SHULKER_BOX")) {
+            if (player.getOpenInventory().getTopInventory().getType().equals(InventoryType.SHULKER_BOX)) {
+                BlockStateMeta meta = (BlockStateMeta) item.getItemMeta();
+                ShulkerBox shulker = (ShulkerBox) meta.getBlockState();
+                if (player.getOpenInventory().getTopInventory().getContents().equals(shulker.getInventory().getContents())) {
+                    player.getOpenInventory().close();
+                }
+            }
         }
     }
 
