@@ -110,6 +110,9 @@ public class ShulkerListener implements Listener {
         }
     }
 
+    /*
+    Prevents users from duplicating items by dropping a shulker and opening it at the same time
+     */
     @EventHandler
     public void onItemDrop(PlayerDropItemEvent event) {
         ItemStack item = event.getItemDrop().getItemStack();
