@@ -17,6 +17,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BlockStateMeta;
 
+import java.util.Arrays;
+
 public class ShulkerListener implements Listener {
 
     public ShulkerPacks main;
@@ -118,6 +120,7 @@ public class ShulkerListener implements Listener {
         ItemStack item = event.getItemDrop().getItemStack();
         Player player = event.getPlayer();
         if (item.getType().toString().contains("SHULKER_BOX")) {
+            main.putThrownItem(player, item);
             if (player.getOpenInventory().getTopInventory().getType().equals(InventoryType.SHULKER_BOX)) {
                 BlockStateMeta meta = (BlockStateMeta) item.getItemMeta();
                 ShulkerBox shulker = (ShulkerBox) meta.getBlockState();
@@ -125,6 +128,12 @@ public class ShulkerListener implements Listener {
                     player.getOpenInventory().close();
                 }
             }
+            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(main, new Runnable() {
+                @Override
+                public void run() {
+                    main.putThrownItem(player, new ItemStack(Material.AIR));
+                }
+            }, 5);
         }
     }
 
@@ -206,41 +215,53 @@ public class ShulkerListener implements Listener {
     Opens the shulker inventory with the contents of the shulker
      */
     public boolean openInventoryIfShulker(ItemStack item, Player player) {
-        if (!main.getThrownItem(player).equals(item)) {
-            if (player.hasPermission("shulkerpacks.use")) {
-                if (item != null) {
-                    if (item.getAmount() == 1) {
-                        if (item.getItemMeta() instanceof BlockStateMeta) {
-                            BlockStateMeta meta = (BlockStateMeta) item.getItemMeta();
-                            if (meta.getBlockState() instanceof ShulkerBox) {
-                                ShulkerBox shulker = (ShulkerBox) meta.getBlockState();
-                                Inventory inv;
-                                if (meta.hasDisplayName()) {
-                                    inv = Bukkit.createInventory(null, InventoryType.SHULKER_BOX, meta.getDisplayName());
-                                } else {
-                                    inv = Bukkit.createInventory(null, InventoryType.SHULKER_BOX, main.defaultname);
-                                }
-                                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(main, new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        if (player.getInventory().contains(item) || player.getOpenInventory().getTopInventory().contains(item)) {
-                                            inv.setContents(shulker.getInventory().getContents());
-                                            player.openInventory(inv);
-                                            player.playSound(player.getLocation(), Sound.BLOCK_SHULKER_BOX_OPEN, 1, 1);
-                                            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(main, new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    main.openshulkers.put(player, item);
-                                                    main.openinventories.put(player.getUniqueId(), player.getOpenInventory().getTopInventory());
-                                                }
-                                            }, 1);
-                                        }
-                                    }
-                                }, 1);
-                                return true;
+        if (player.hasPermission("shulkerpacks.use")) {
+            if (item != null) {
+                if (item.getAmount() == 1) {
+                    if (item.getItemMeta() instanceof BlockStateMeta) {
+                        BlockStateMeta meta = (BlockStateMeta) item.getItemMeta();
+                        if (meta.getBlockState() instanceof ShulkerBox) {
+                            ShulkerBox shulker = (ShulkerBox) meta.getBlockState();
+                            Inventory inv;
+                            if (meta.hasDisplayName()) {
+                                inv = Bukkit.createInventory(null, InventoryType.SHULKER_BOX, meta.getDisplayName());
+                            } else {
+                                inv = Bukkit.createInventory(null, InventoryType.SHULKER_BOX, main.defaultname);
                             }
+                            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(main, new Runnable() {
+                                @Override
+                                public void run() {
+                                    inv.setContents(shulker.getInventory().getContents());
+                                    if (!compareShulkers(main.getThrownItem(player), inv)) {
+                                        player.openInventory(inv);
+                                        player.playSound(player.getLocation(), Sound.BLOCK_SHULKER_BOX_OPEN, 1, 1);
+                                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(main, new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                main.openshulkers.put(player, item);
+                                                main.openinventories.put(player.getUniqueId(), player.getOpenInventory().getTopInventory());
+                                            }
+                                        }, 1);
+                                    }
+                                    main.putThrownItem(player, new ItemStack(Material.AIR));
+                                }
+                            }, 1);
+                            return true;
                         }
                     }
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean compareShulkers(ItemStack item, Inventory inv) {
+        if (item.getType().toString().contains("SHULKER_BOX")) {
+            if (inv.getType().equals(InventoryType.SHULKER_BOX)) {
+                BlockStateMeta meta = (BlockStateMeta) item.getItemMeta();
+                ShulkerBox shulker = (ShulkerBox) meta.getBlockState();
+                if (Arrays.equals(inv.getContents(), shulker.getInventory().getContents())) {
+                    return true;
                 }
             }
         }
