@@ -22,10 +22,7 @@ public final class ShulkerPacks extends JavaPlugin {
     List<String> blacklist = new ArrayList<>();
     String defaultname = ChatColor.BLUE + "Shulker Pack";
     boolean shiftclicktoopen = false;
-    boolean canopeninenderchest = true;
-    boolean canopeninbarrels = true;
-    boolean canplaceshulker = true;
-    boolean canopeninair = true;
+    boolean canopeninenderchest, canopeninbarrels, canplaceshulker, canopenininventory, canopeninair;
     Map<UUID, ItemStack> thrownItem = new HashMap<>();
 
     /*
@@ -39,17 +36,19 @@ public final class ShulkerPacks extends JavaPlugin {
 
         saveDefaultConfig();
         canopeninchests = getConfig().getBoolean("canopeninchests");
-        canopeninenderchest = getConfig().getBoolean("canopeninenderchest");
-        canopeninbarrels = getConfig().getBoolean("canopeninbarrels");
-        canplaceshulker = getConfig().getBoolean("canplaceshulker");
+        canopeninenderchest = getConfig().getBoolean("canopeninenderchest", true);
+        canopeninbarrels = getConfig().getBoolean("canopeninbarrels", true);
+        canopenininventory = getConfig().getBoolean("canopenininventory", true);
+        canplaceshulker = getConfig().getBoolean("canplaceshulker", true);
         blacklist = getConfig().getStringList("blacklistedinventories");
-        canopeninair = getConfig().getBoolean("canopeninair");
+        canopeninair = getConfig().getBoolean("canopeninair", true);
         if (getConfig().getString("defaultname") != null) {
             defaultname = ChatColor.translateAlternateColorCodes('&', getConfig().getString("defaultname"));
         }
         shiftclicktoopen = getConfig().getBoolean("shiftclicktoopen");
 
-        Metrics metrics = new Metrics(this);
+        @SuppressWarnings("unused")
+		Metrics metrics = new Metrics(this);
 
         System.out.println(prefix + ChatColor.GREEN + "ShulkerPacks has been enabled!");
     }
