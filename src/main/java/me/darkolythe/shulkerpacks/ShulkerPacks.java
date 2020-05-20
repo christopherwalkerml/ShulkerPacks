@@ -23,6 +23,7 @@ public final class ShulkerPacks extends JavaPlugin {
     String defaultname = ChatColor.BLUE + "Shulker Pack";
     boolean shiftclicktoopen = false;
     boolean canopeninenderchest = true;
+    boolean canopeninbarrels = true;
     boolean canplaceshulker = true;
     boolean canopeninair = true;
     Map<UUID, ItemStack> thrownItem = new HashMap<>();
@@ -39,6 +40,7 @@ public final class ShulkerPacks extends JavaPlugin {
         saveDefaultConfig();
         canopeninchests = getConfig().getBoolean("canopeninchests");
         canopeninenderchest = getConfig().getBoolean("canopeninenderchest");
+        canopeninbarrels = getConfig().getBoolean("canopeninbarrels");
         canplaceshulker = getConfig().getBoolean("canplaceshulker");
         blacklist = getConfig().getStringList("blacklistedinventories");
         canopeninair = getConfig().getBoolean("canopeninair");
