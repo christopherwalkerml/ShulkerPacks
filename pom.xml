@@ -6,7 +6,7 @@
 
     <groupId>me.Darkolythe</groupId>
     <artifactId>ShulkerPacks</artifactId>
-    <version>1.4.13</version>
+    <version>1.4.15</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -48,7 +48,7 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>2.3.1</version>
                 <configuration>
-                    <finalName>ShulkerPacks</finalName>
+                    <outputDirectory>C:\Users\ChrisWalker\Desktop\1.15server\plugins</outputDirectory>
                 </configuration>
             </plugin>
             <plugin>

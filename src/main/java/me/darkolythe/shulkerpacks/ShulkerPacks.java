@@ -17,12 +17,14 @@ public final class ShulkerPacks extends JavaPlugin {
     String prefix = ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "[" + ChatColor.BLUE.toString() + "ShulkerPacks" + ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "] ";
 
     Map<Player, ItemStack> openshulkers = new HashMap<>();
+    Map<Player, Boolean> fromhand = new HashMap<>();
     Map<UUID, Inventory> openinventories = new HashMap<>();
     boolean canopeninchests = true;
     List<String> blacklist = new ArrayList<>();
     String defaultname = ChatColor.BLUE + "Shulker Pack";
     boolean shiftclicktoopen = false;
     boolean canopeninenderchest, canopeninbarrels, canplaceshulker, canopenininventory, canopeninair;
+    float volume;
     Map<UUID, ItemStack> thrownItem = new HashMap<>();
 
     /*
@@ -42,6 +44,7 @@ public final class ShulkerPacks extends JavaPlugin {
         canplaceshulker = getConfig().getBoolean("canplaceshulker", true);
         blacklist = getConfig().getStringList("blacklistedinventories");
         canopeninair = getConfig().getBoolean("canopeninair", true);
+        volume = (float) getConfig().getDouble("shulkervolume", 1.0);
         if (getConfig().getString("defaultname") != null) {
             defaultname = ChatColor.translateAlternateColorCodes('&', getConfig().getString("defaultname"));
         }

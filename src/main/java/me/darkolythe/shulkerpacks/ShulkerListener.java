@@ -49,14 +49,17 @@ public class ShulkerListener implements Listener {
      */
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
-        if (checkIfOpen(event.getCurrentItem())) {
-            if (event.getClick() != ClickType.RIGHT) {
+        Player player = (Player) event.getWhoClicked();
+
+        if (main.openshulkers.containsKey(player) && main.fromhand.containsKey(player)) {
+            if (player.getInventory().getItem(player.getInventory().getHeldItemSlot()) == null || player.getInventory().getItem(player.getInventory().getHeldItemSlot()).getType() == Material.AIR) {
                 event.setCancelled(true);
-                return;
+                main.openshulkers.remove(player);
+                player.closeInventory();
             }
         }
+
         if (event.getWhoClicked() instanceof Player && event.getClickedInventory() != null) {
-            Player player = (Player) event.getWhoClicked();
             if (event.getCurrentItem() != null && (main.openshulkers.containsKey(player) && event.getCurrentItem().equals(main.openshulkers.get(player)))) {
                 event.setCancelled(true);
                 return;
@@ -64,8 +67,10 @@ public class ShulkerListener implements Listener {
             if (event.getClickedInventory() != null && (event.getClickedInventory().getType() == InventoryType.CHEST && !main.canopeninchests)) {
                 return;
             }
+            String typeStr = event.getInventory().getType().toString();
             InventoryType type = event.getInventory().getType();
-            if (type == InventoryType.WORKBENCH || type == InventoryType.ANVIL || type == InventoryType.BEACON || type == InventoryType.MERCHANT || type == InventoryType.ENCHANTING) {
+            if (typeStr.equals("WORKBENCH") || typeStr.equals("ANVIL") || typeStr.equals("BEACON") || typeStr.equals("MERCHANT") || typeStr.equals("ENCHANTING") ||
+                    typeStr.equals("GRINDSTONE") || typeStr.equals("CARTOGRAPHY") || typeStr.equals("LOOM") || typeStr.equals("STONECUTTER")) {
                 return;
             }
             if (type == InventoryType.CRAFTING && event.getRawSlot() >= 1 && event.getRawSlot() <= 4) {
@@ -89,6 +94,7 @@ public class ShulkerListener implements Listener {
             }
             if (!main.shiftclicktoopen || event.isShiftClick()) {
                 if (event.isRightClick() && openInventoryIfShulker(event.getCurrentItem(), player)) {
+                    main.fromhand.remove(player);
                     event.setCancelled(true);
                     return;
                 }
@@ -112,7 +118,7 @@ public class ShulkerListener implements Listener {
         if (event.getPlayer() instanceof Player) {
             Player player = (Player) event.getPlayer();
             if (saveShulker(player, player.getOpenInventory().getTitle())) {
-                player.playSound(player.getLocation(), Sound.BLOCK_SHULKER_BOX_CLOSE, 1, 1);
+                player.playSound(player.getLocation(), Sound.BLOCK_SHULKER_BOX_CLOSE, main.volume, 1);
             }
             main.openshulkers.remove(player);
         }
@@ -153,6 +159,7 @@ public class ShulkerListener implements Listener {
                 if (event.getAction() == Action.RIGHT_CLICK_AIR) {
                     ItemStack item = event.getItem();
                     openInventoryIfShulker(item, event.getPlayer());
+                    main.fromhand.put(event.getPlayer(), true);
                 }
             }
         }
@@ -197,15 +204,6 @@ public class ShulkerListener implements Listener {
         return false;
     }
 
-    private boolean checkIfOpen(ItemStack shulker) {
-        for (ItemStack i : main.openshulkers.values()) {
-            if (i.equals(shulker)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     private void updateAllInventories(ItemStack item) {
         for (Player p : main.openshulkers.keySet()) {
             if (main.openshulkers.get(p).equals(item)) {
@@ -234,24 +232,14 @@ public class ShulkerListener implements Listener {
                             } else {
                                 inv = Bukkit.createInventory(null, InventoryType.SHULKER_BOX, main.defaultname);
                             }
-                            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(main, new Runnable() {
-                                @Override
-                                public void run() {
-                                    inv.setContents(shulker.getInventory().getContents());
-                                    if (!compareShulkers(main.getThrownItem(player), inv)) {
-                                        player.openInventory(inv);
-                                        player.playSound(player.getLocation(), Sound.BLOCK_SHULKER_BOX_OPEN, 1, 1);
-                                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(main, new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                main.openshulkers.put(player, item);
-                                                main.openinventories.put(player.getUniqueId(), player.getOpenInventory().getTopInventory());
-                                            }
-                                        }, 1);
-                                    }
-                                    main.putThrownItem(player, new ItemStack(Material.AIR));
-                                }
-                            }, 1);
+                            inv.setContents(shulker.getInventory().getContents());
+                            if (!compareShulkers(main.getThrownItem(player), inv)) {
+                                player.openInventory(inv);
+                                player.playSound(player.getLocation(), Sound.BLOCK_SHULKER_BOX_OPEN, main.volume, 1);
+                                main.openshulkers.put(player, item);
+                                main.openinventories.put(player.getUniqueId(), player.getOpenInventory().getTopInventory());
+                            }
+                            main.putThrownItem(player, new ItemStack(Material.AIR));
                             return true;
                         }
                     }
