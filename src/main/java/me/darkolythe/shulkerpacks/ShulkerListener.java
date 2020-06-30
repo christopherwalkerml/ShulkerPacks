@@ -9,11 +9,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BlockStateMeta;
 
@@ -50,6 +52,13 @@ public class ShulkerListener implements Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
+
+        if (checkIfOpen(event.getCurrentItem())) { //cancels the event if the player is trying to remove an open shulker
+            if (event.getClick() != ClickType.RIGHT) {
+                event.setCancelled(true);
+                return;
+            }
+        }
 
         if (main.openshulkers.containsKey(player) && main.fromhand.containsKey(player)) {
             if (player.getInventory().getItem(player.getInventory().getHeldItemSlot()) == null || player.getInventory().getItem(player.getInventory().getHeldItemSlot()).getType() == Material.AIR) {
@@ -108,6 +117,16 @@ public class ShulkerListener implements Listener {
                 }
             }, 1);
         }
+    }
+
+    // Deals with multiple people opening the same shulker
+    private boolean checkIfOpen(ItemStack shulker) {
+        for (ItemStack i : main.openshulkers.values()) {
+            if (i.equals(shulker)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /*
@@ -174,6 +193,19 @@ public class ShulkerListener implements Listener {
         }
     }
 
+    @EventHandler
+    private void onBlockBreak(BlockBreakEvent event) {
+        if (event.getBlock().getState() instanceof InventoryHolder) {
+            InventoryHolder inv = (InventoryHolder) event.getBlock().getState();
+            for (Player player : main.openshulkers.keySet()) {
+                ItemStack item = main.openshulkers.get(player);
+                if (inv.getInventory().contains(item)) {
+                    player.closeInventory();
+                }
+            }
+        }
+    }
+
     /*
     Saves the shulker data in the itemmeta
      */
@@ -224,7 +256,7 @@ public class ShulkerListener implements Listener {
                 if (item.getAmount() == 1) {
                     if (item.getItemMeta() instanceof BlockStateMeta) {
                         BlockStateMeta meta = (BlockStateMeta) item.getItemMeta();
-                        if (meta.getBlockState() instanceof ShulkerBox) {
+                        if (meta != null && meta.getBlockState() instanceof ShulkerBox) {
                             ShulkerBox shulker = (ShulkerBox) meta.getBlockState();
                             Inventory inv;
                             if (meta.hasDisplayName()) {
