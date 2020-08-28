@@ -223,6 +223,8 @@ public class ShulkerListener implements Listener {
                             }
                             inv.setContents(shulker.getInventory().getContents());
 
+                            main.opencontainer.put(player, player.getOpenInventory().getTopInventory());
+
                             player.openInventory(inv);
                             player.playSound(player.getLocation(), Sound.BLOCK_SHULKER_BOX_OPEN, main.volume, 1);
                             main.openshulkers.put(player, item);
@@ -243,6 +245,13 @@ public class ShulkerListener implements Listener {
                 for (Player p : main.openshulkers.keySet()) {
                     if (main.openshulkers.get(p).getType() == Material.AIR) {
                         p.closeInventory();
+                    }
+                    if (main.opencontainer.containsKey(p)) {
+                        if (main.opencontainer.get(p).getLocation() != null) {
+                            if (main.opencontainer.get(p).getLocation().distance(p.getLocation()) > 8) {
+                                p.closeInventory();
+                            }
+                        }
                     }
                 }
             }

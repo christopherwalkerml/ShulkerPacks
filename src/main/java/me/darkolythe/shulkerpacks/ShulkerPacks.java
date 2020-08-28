@@ -18,6 +18,7 @@ public final class ShulkerPacks extends JavaPlugin {
     Map<Player, ItemStack> openshulkers = new HashMap<>();
     Map<Player, Boolean> fromhand = new HashMap<>();
     Map<UUID, Inventory> openinventories = new HashMap<>();
+    Map<Player, Inventory> opencontainer = new HashMap<>();
     boolean canopeninchests = true;
     List<String> blacklist = new ArrayList<>();
     String defaultname = ChatColor.BLUE + "Shulker Pack";
