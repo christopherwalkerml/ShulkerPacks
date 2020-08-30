@@ -12,6 +12,7 @@ This also works in chests (GUIs can be blacklisted with their inventory name in 
 shulkerpacks.use (lets the player use shulker packs)
 
 ### Config:
+```
 blacklistedinventories: ["&4&lMineXChange", "test inventory"]
 
 canopeninair: true #false will prevent the user from opening shulkerboxes by clicking the air
@@ -21,7 +22,7 @@ canplaceshulker: true #false will prevent users from placing shulkerboxes by acc
 
 defaultname: "&9Shulker Pack"
 shiftclicktoopen: false
-
+```
 __The fastest and easiest way to contact me:__
 Discord: https://discord.gg/AET9mWj
 
