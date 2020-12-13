@@ -41,6 +41,15 @@ public class ShulkerListener implements Listener {
         }
     }
 
+    @EventHandler
+    public void onInventoryMoveItem(InventoryMoveItemEvent event) {
+        for (Player p : main.openshulkers.keySet()) {
+            if (main.openshulkers.get(p).equals(event.getItem())) {
+                p.closeInventory();
+            }
+        }
+    }
+
     /*
     Opens the shulker if its not in a weird inventory, then saves it
      */
