@@ -55,6 +55,10 @@ public class ShulkerListener implements Listener {
      */
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
+    	if (event.isCancelled()) {
+    		return;
+    	}
+    	
         Player player = (Player) event.getWhoClicked();
 
         if (main.openshulkers.containsKey(player)) {
