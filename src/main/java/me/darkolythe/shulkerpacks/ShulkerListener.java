@@ -16,6 +16,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BlockStateMeta;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ShulkerListener implements Listener {
 
     public ShulkerPacks main;
@@ -43,8 +46,15 @@ public class ShulkerListener implements Listener {
 
     @EventHandler
     public void onInventoryMoveItem(InventoryMoveItemEvent event) {
+        List<Player> closeInventories = new ArrayList<>();
         for (Player p : main.openshulkers.keySet()) {
+            System.out.println(main.openshulkers.get(p));
             if (main.openshulkers.get(p).equals(event.getItem())) {
+                closeInventories.add(p);
+            }
+        }
+        for (Player p : closeInventories) {
+            if (event.getInitiator().getLocation().distance(p.getLocation()) < 6) {
                 p.closeInventory();
             }
         }
@@ -261,7 +271,7 @@ public class ShulkerListener implements Listener {
                     }
                     if (main.opencontainer.containsKey(p)) {
                         if (main.opencontainer.get(p).getLocation() != null) {
-                            if (main.opencontainer.get(p).getLocation().distance(p.getLocation()) > 8) {
+                            if (main.opencontainer.get(p).getLocation().distance(p.getLocation()) > 6) {
                                 p.closeInventory();
                             }
                         }
