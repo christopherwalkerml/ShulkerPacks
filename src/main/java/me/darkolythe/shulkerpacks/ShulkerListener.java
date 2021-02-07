@@ -48,7 +48,6 @@ public class ShulkerListener implements Listener {
     public void onInventoryMoveItem(InventoryMoveItemEvent event) {
         List<Player> closeInventories = new ArrayList<>();
         for (Player p : main.openshulkers.keySet()) {
-            System.out.println(main.openshulkers.get(p));
             if (main.openshulkers.get(p).equals(event.getItem())) {
                 closeInventories.add(p);
             }
