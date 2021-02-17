@@ -93,8 +93,8 @@ public class ShulkerListener implements Listener {
             if (event.getClickedInventory() != null && (event.getClickedInventory().getType() == InventoryType.CHEST && !main.canopeninchests)) {
                 return;
             }
-            String typeStr = event.getInventory().getType().toString();
-            InventoryType type = event.getInventory().getType();
+            String typeStr = event.getClickedInventory().getType().toString();
+            InventoryType type = event.getClickedInventory().getType();
             if (typeStr.equals("WORKBENCH") || typeStr.equals("ANVIL") || typeStr.equals("BEACON") || typeStr.equals("MERCHANT") || typeStr.equals("ENCHANTING") ||
                     typeStr.equals("GRINDSTONE") || typeStr.equals("CARTOGRAPHY") || typeStr.equals("LOOM") || typeStr.equals("STONECUTTER")) {
                 return;
