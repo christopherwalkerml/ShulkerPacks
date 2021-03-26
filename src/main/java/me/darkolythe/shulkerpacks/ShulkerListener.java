@@ -105,6 +105,9 @@ public class ShulkerListener implements Listener {
             if (player.getInventory() == event.getClickedInventory() && !main.canopenininventory) {
             	return;
             }
+            if (event.getSlotType() == InventoryType.SlotType.RESULT) {
+                return;
+            }
             if(event.getClickedInventory() != null && event.getClickedInventory().getHolder() != null && event.getClickedInventory().getHolder().getClass().toString().endsWith(".CraftBarrel") && !main.canopeninbarrels) {
             	return;
             }
