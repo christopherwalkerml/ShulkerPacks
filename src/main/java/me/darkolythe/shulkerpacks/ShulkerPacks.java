@@ -19,9 +19,11 @@ public final class ShulkerPacks extends JavaPlugin {
     Map<Player, Boolean> fromhand = new HashMap<>();
     Map<UUID, Inventory> openinventories = new HashMap<>();
     Map<Player, Inventory> opencontainer = new HashMap<>();
+    private Map<Player, Long> pvp_timer = new HashMap<>();
     boolean canopeninchests = true;
     List<String> blacklist = new ArrayList<>();
     String defaultname = ChatColor.BLUE + "Shulker Pack";
+    private boolean pvp_timer_enabled = false;
     boolean shiftclicktoopen = false;
     boolean canopeninenderchest, canopeninbarrels, canplaceshulker, canopenininventory, canopeninair;
     float volume;
@@ -44,6 +46,7 @@ public final class ShulkerPacks extends JavaPlugin {
         blacklist = getConfig().getStringList("blacklistedinventories");
         canopeninair = getConfig().getBoolean("canopeninair", true);
         volume = (float) getConfig().getDouble("shulkervolume", 1.0);
+        pvp_timer_enabled = getConfig().getBoolean("disable-in-combat", true);
         if (getConfig().getString("defaultname") != null) {
             defaultname = ChatColor.translateAlternateColorCodes('&', getConfig().getString("defaultname"));
         }
@@ -63,5 +66,19 @@ public final class ShulkerPacks extends JavaPlugin {
     @Override
     public void onDisable() {
         System.out.println(prefix + ChatColor.RED + "ShulkerPacks has been disabled!");
+    }
+
+
+    public boolean getPvpTimer(Player player) {
+        if (pvp_timer.containsKey(player)) {
+            return System.currentTimeMillis() - pvp_timer.get(player) < 7000;
+        }
+        return false;
+    }
+
+    public void setPvpTimer(Player player) {
+        if (pvp_timer_enabled) {
+            pvp_timer.put(player, System.currentTimeMillis());
+        }
     }
 }

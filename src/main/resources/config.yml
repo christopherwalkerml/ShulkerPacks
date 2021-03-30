@@ -7,6 +7,9 @@ canopeninenderchest: true     #false will prevent users from opening shulkerboxe
 canopeninbarrels: true        #false will prevent users from opening shulkerboxes in barrels
 canplaceshulker: true         #false will prevent users from placing shulkerboxes by accident
 
+#true will prevent users from opening shulkerboxes within 7 seconds of being hit by a player
+disable-in-combat: false
+
 defaultname: "&9Shulker Pack"
 shiftclicktoopen: false
 shulkervolume: 1              #0.1 is quiet, 1 is loud

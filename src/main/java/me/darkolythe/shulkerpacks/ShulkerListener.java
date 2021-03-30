@@ -10,6 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
@@ -188,6 +189,14 @@ public class ShulkerListener implements Listener {
         }
     }
 
+    @EventHandler
+    public void onPlayerHit(EntityDamageByEntityEvent event) {
+        if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
+            main.setPvpTimer((Player) event.getDamager());
+            main.setPvpTimer((Player) event.getEntity());
+        }
+    }
+
     /*
     Saves the shulker data in the itemmeta
      */
@@ -233,6 +242,11 @@ public class ShulkerListener implements Listener {
     Opens the shulker inventory with the contents of the shulker
      */
     public boolean openInventoryIfShulker(ItemStack item, Player player) {
+        if (main.getPvpTimer(player)) {
+            player.sendMessage(main.prefix + ChatColor.RED + "You cannot open shulkerboxes in combat!");
+            return false;
+        }
+
         if (player.hasPermission("shulkerpacks.use")) {
             if (item != null) {
                 if (item.getAmount() == 1 && item.getType().toString().contains("SHULKER")) {
