@@ -256,9 +256,9 @@ public class ShulkerListener implements Listener {
                             ShulkerBox shulker = (ShulkerBox) meta.getBlockState();
                             Inventory inv;
                             if (meta.hasDisplayName()) {
-                                inv = Bukkit.createInventory(null, InventoryType.SHULKER_BOX, meta.getDisplayName());
+                                inv = Bukkit.createInventory(new ShulkerHolder(), InventoryType.SHULKER_BOX, meta.getDisplayName());
                             } else {
-                                inv = Bukkit.createInventory(null, InventoryType.SHULKER_BOX, main.defaultname);
+                                inv = Bukkit.createInventory(new ShulkerHolder(), InventoryType.SHULKER_BOX, main.defaultname);
                             }
                             inv.setContents(shulker.getInventory().getContents());
 
