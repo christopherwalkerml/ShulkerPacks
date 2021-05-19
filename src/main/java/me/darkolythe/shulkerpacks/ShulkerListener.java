@@ -118,7 +118,7 @@ public class ShulkerListener implements Listener {
             }
 
             for (String str: main.blacklist) {
-                if (player.getOpenInventory().getTitle().contains(ChatColor.translateAlternateColorCodes('&', str))) {
+                if (ChatColor.stripColor(player.getOpenInventory().getTitle()).contains(ChatColor.stripColor(str))) {
                     return;
                 }
             }
