@@ -91,7 +91,8 @@ public class ShulkerListener implements Listener {
                 event.setCancelled(true);
                 return;
             }
-            if (event.getClickedInventory() != null && (event.getClickedInventory().getType() == InventoryType.CHEST && !main.canopeninchests)) {
+            if ((event.getClickedInventory() != null && (event.getClickedInventory().getType() == InventoryType.CHEST && !main.canopeninchests))
+                    || (main.canopeninchests && !player.hasPermission("shulkerpacks.open_in_chests"))) {
                 return;
             }
             String typeStr = event.getClickedInventory().getType().toString();
@@ -103,7 +104,8 @@ public class ShulkerListener implements Listener {
             if (type == InventoryType.CRAFTING && event.getRawSlot() >= 1 && event.getRawSlot() <= 4) {
                 return;
             }
-            if (player.getInventory() == event.getClickedInventory() && !main.canopenininventory) {
+            if ((player.getInventory() == event.getClickedInventory() && !main.canopenininventory)
+                    || (main.canopenininventory && !player.hasPermission("shulkerpacks.open_in_inventory"))) {
             	return;
             }
             if (event.getSlotType() == InventoryType.SlotType.RESULT) {
@@ -169,12 +171,15 @@ public class ShulkerListener implements Listener {
      */
     @EventHandler
     public void onClickAir(PlayerInteractEvent event) {
+        Player player = event.getPlayer();
         if (main.canopeninair && (event.getClickedBlock() == null || event.getClickedBlock().getType() == Material.AIR)) {
-            if ((!main.shiftclicktoopen || event.getPlayer().isSneaking())) {
+            if ((!main.shiftclicktoopen || player.isSneaking())) {
                 if (event.getAction() == Action.RIGHT_CLICK_AIR) {
-                    ItemStack item = event.getItem();
-                    openInventoryIfShulker(item, event.getPlayer());
-                    main.fromhand.put(event.getPlayer(), true);
+                     if (main.canopeninair && player.hasPermission("shulkerpacks.open_in_air")) {
+                         ItemStack item = event.getItem();
+                         openInventoryIfShulker(item, event.getPlayer());
+                         main.fromhand.put(player, true);
+                     }
                 }
             }
         }

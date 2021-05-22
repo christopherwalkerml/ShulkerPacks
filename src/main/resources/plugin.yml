@@ -1,5 +1,5 @@
 name: ShulkerPacks
-version: 1.5.10
+version: 1.5.11
 main: me.darkolythe.shulkerpacks.ShulkerPacks
 api-version: 1.13
 
@@ -7,3 +7,12 @@ permissions:
   shulkerpacks.use:
     description: gives player permission to open shulker boxes in their inventory
     default: op
+  shulkerpacks.open_in_air:
+    description: allows the player to open the shulkerbox in the air (if config enables it) if the player has "shulkerpacks.use"
+    default: true
+  shulkerpacks.open_in_inventory:
+    description: allows the player to open the shulkerbox in their inventory (if config enables it) if the player has "shulkerpacks.use"
+    default: true
+  shulkerpacks.open_in_chests:
+    description: allows the player to open the shulkerbox in a chest (if config enables it) if the player has "shulkerpacks.use"
+    default: true
