@@ -91,26 +91,34 @@ public class ShulkerListener implements Listener {
                 event.setCancelled(true);
                 return;
             }
-            if ((event.getClickedInventory() != null && (event.getClickedInventory().getType() == InventoryType.CHEST && !main.canopeninchests))
-                    || (main.canopeninchests && !player.hasPermission("shulkerpacks.open_in_chests"))) {
-                return;
+            
+            if (event.getClickedInventory() != null && (event.getClickedInventory().getType() == InventoryType.CHEST)) {
+                if (!main.canopeninchests || (main.canopeninchests && !player.hasPermission("shulkerpacks.open_in_chests"))) {
+                    return;
+                }
             }
+
             String typeStr = event.getClickedInventory().getType().toString();
             InventoryType type = event.getClickedInventory().getType();
             if (typeStr.equals("WORKBENCH") || typeStr.equals("ANVIL") || typeStr.equals("BEACON") || typeStr.equals("MERCHANT") || typeStr.equals("ENCHANTING") ||
                     typeStr.equals("GRINDSTONE") || typeStr.equals("CARTOGRAPHY") || typeStr.equals("LOOM") || typeStr.equals("STONECUTTER")) {
                 return;
             }
+
             if (type == InventoryType.CRAFTING && event.getRawSlot() >= 1 && event.getRawSlot() <= 4) {
                 return;
             }
-            if ((player.getInventory() == event.getClickedInventory() && !main.canopenininventory)
-                    || (main.canopenininventory && !player.hasPermission("shulkerpacks.open_in_inventory"))) {
-            	return;
+
+            if ((player.getInventory() == event.getClickedInventory()) {
+                if (!main.canopenininventory || (main.canopenininventory && !player.hasPermission("shulkerpacks.open_in_inventory"))) {
+            	    return;
+                }
             }
+
             if (event.getSlotType() == InventoryType.SlotType.RESULT) {
                 return;
             }
+
             if(event.getClickedInventory() != null && event.getClickedInventory().getHolder() != null && event.getClickedInventory().getHolder().getClass().toString().endsWith(".CraftBarrel") && !main.canopeninbarrels) {
             	return;
             }
@@ -124,6 +132,7 @@ public class ShulkerListener implements Listener {
                     return;
                 }
             }
+
             if (!main.shiftclicktoopen || event.isShiftClick()) {
                 if (event.isRightClick() && openInventoryIfShulker(event.getCurrentItem(), player)) {
                     main.fromhand.remove(player);
@@ -131,6 +140,7 @@ public class ShulkerListener implements Listener {
                     return;
                 }
             }
+
             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(main, new Runnable() {
                 @Override
                 public void run() {
