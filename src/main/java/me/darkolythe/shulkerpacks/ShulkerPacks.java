@@ -8,6 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.*;
+import java.util.logging.Level;
 
 public final class ShulkerPacks extends JavaPlugin {
 
@@ -57,7 +58,7 @@ public final class ShulkerPacks extends JavaPlugin {
 
         shulkerlistener.checkIfValid();
 
-        System.out.println(prefix + ChatColor.GREEN + "ShulkerPacks has been enabled!");
+        getLogger().log(Level.INFO, (prefix + ChatColor.GREEN + "ShulkerPacks has been enabled!"));
     }
 
     /*
@@ -65,7 +66,7 @@ public final class ShulkerPacks extends JavaPlugin {
      */
     @Override
     public void onDisable() {
-        System.out.println(prefix + ChatColor.RED + "ShulkerPacks has been disabled!");
+        getLogger().log(Level.INFO, (prefix + ChatColor.RED + "ShulkerPacks has been disabled!"));
     }
 
 
