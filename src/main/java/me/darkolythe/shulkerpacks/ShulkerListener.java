@@ -111,8 +111,8 @@ public class ShulkerListener implements Listener {
                 return;
             }
 
-            if ((player.getInventory() == event.getClickedInventory()) {
-                if (!main.canopenininventory || (main.canopenininventory && !player.hasPermission("shulkerpacks.open_in_inventory"))) {
+            if ((player.getInventory() == event.getClickedInventory())) {
+                if (!main.canopenininventory || !player.hasPermission("shulkerpacks.open_in_inventory")) {
             	    return;
                 }
             }
