@@ -137,12 +137,13 @@ public class ShulkerListener implements Listener {
             }
 
             if (!main.shiftclicktoopen || event.isShiftClick()) {
+                boolean isCancelled = event.isCancelled();
                 event.setCancelled(true);
                 if (event.isRightClick() && openInventoryIfShulker(event.getCurrentItem(), player)) {
                     main.fromhand.remove(player);
                     return;
                 }
-                event.setCancelled(false);
+                event.setCancelled(isCancelled);
             }
 
             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(main, new Runnable() {
