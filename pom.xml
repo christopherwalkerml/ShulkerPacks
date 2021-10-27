@@ -6,7 +6,7 @@
 
     <groupId>me.Darkolythe</groupId>
     <artifactId>ShulkerPacks</artifactId>
-    <version>1.5.16</version>
+    <version>1.6.0</version>
     <packaging>jar</packaging>
 
     <properties>

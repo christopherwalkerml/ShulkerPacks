@@ -176,10 +176,28 @@ public class ShulkerListener implements Listener {
             Player player = (Player) event.getPlayer();
             if (saveShulker(player, player.getOpenInventory().getTitle())) {
                 player.playSound(player.getLocation(), Sound.BLOCK_SHULKER_BOX_CLOSE, main.volume, 1);
+                if (main.openpreviousinv) {
+                    openPreviousInventory(player);
+                }
             }
             main.openshulkers.remove(player);
         }
     }
+
+
+    private void openPreviousInventory(Player player) {
+        InventoryType type = main.opencontainer.get(player).getType();
+        if (type != InventoryType.CRAFTING && type != InventoryType.SHULKER_BOX) {
+            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(main, new Runnable() {
+                @Override
+                public void run() {
+                    player.openInventory(main.opencontainer.get(player));
+                    main.opencontainer.remove(player);
+                }
+            }, 1);
+        }
+    }
+
 
     /*
     Opens the shulker if the air was clicked with one

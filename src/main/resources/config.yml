@@ -14,3 +14,5 @@ defaultname: "&9Shulker Pack"
 shiftclicktoopen: false
 shulkervolume: 1              #0.1 is quiet, 1 is loud
 #shift click to open applies to both ingame and in inventory
+
+open-previous-inventory: false

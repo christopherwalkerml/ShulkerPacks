@@ -22,6 +22,7 @@ public final class ShulkerPacks extends JavaPlugin {
     Map<Player, Inventory> opencontainer = new HashMap<>();
     private Map<Player, Long> pvp_timer = new HashMap<>();
     boolean canopeninchests = true;
+    boolean openpreviousinv = false;
     List<String> blacklist = new ArrayList<>();
     String defaultname = ChatColor.BLUE + "Shulker Pack";
     private boolean pvp_timer_enabled = false;
@@ -46,6 +47,7 @@ public final class ShulkerPacks extends JavaPlugin {
         canplaceshulker = getConfig().getBoolean("canplaceshulker", true);
         blacklist = getConfig().getStringList("blacklistedinventories");
         canopeninair = getConfig().getBoolean("canopeninair", true);
+        openpreviousinv = getConfig().getBoolean("open-previous-inventory", false);
         volume = (float) getConfig().getDouble("shulkervolume", 1.0);
         pvp_timer_enabled = getConfig().getBoolean("disable-in-combat", true);
         if (getConfig().getString("defaultname") != null) {
