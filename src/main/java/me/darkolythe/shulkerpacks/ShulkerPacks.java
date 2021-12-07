@@ -3,6 +3,8 @@ package me.darkolythe.shulkerpacks;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.bukkit.event.EventPriority;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -11,6 +13,12 @@ import java.util.*;
 import java.util.logging.Level;
 
 public final class ShulkerPacks extends JavaPlugin {
+
+    private static ShulkerPacks instance;
+
+    {
+        instance = this;
+    }
 
     ShulkerListener shulkerlistener;
 
@@ -30,6 +38,10 @@ public final class ShulkerPacks extends JavaPlugin {
     boolean canopeninenderchest, canopeninbarrels, canplaceshulker, canopenininventory, canopeninair;
     float volume;
 
+    public static ShulkerPacks getInstance() {
+        return instance;
+    }
+
     /*
     Sets up the plugin
      */
@@ -38,6 +50,13 @@ public final class ShulkerPacks extends JavaPlugin {
         shulkerlistener = new ShulkerListener(this);
 
         getServer().getPluginManager().registerEvents(shulkerlistener, this);
+        try {
+            Class<? extends Event> chestSortEventClass = (Class<? extends Event>) Class.forName("de.jeff_media.chestsort.api.ChestSortEvent");
+            ChestSortListener chestSortListener = new ChestSortListener();
+            getServer().getPluginManager().registerEvent(chestSortEventClass, chestSortListener, EventPriority.HIGHEST, chestSortListener.getExecutor(), this);
+        } catch (ClassNotFoundException ignored) {
+            // ChestSort is not installed
+        }
 
         saveDefaultConfig();
         canopeninchests = getConfig().getBoolean("canopeninchests");
