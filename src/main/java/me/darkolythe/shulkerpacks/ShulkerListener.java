@@ -94,13 +94,15 @@ public class ShulkerListener implements Listener {
                 event.setCancelled(true);
                 return;
             }
-            
+
+            // prevent the player from opening it in a chest if they have no permission
             if (event.getClickedInventory() != null && (event.getClickedInventory().getType() == InventoryType.CHEST)) {
                 if (!main.canopeninchests || (main.canopeninchests && !player.hasPermission("shulkerpacks.open_in_chests"))) {
                     return;
                 }
             }
 
+            // prevent the player from opening the shulkerbox in inventories without storage slots
             String typeStr = event.getClickedInventory().getType().toString();
             InventoryType type = event.getClickedInventory().getType();
             if (typeStr.equals("WORKBENCH") || typeStr.equals("ANVIL") || typeStr.equals("BEACON") || typeStr.equals("MERCHANT") || typeStr.equals("ENCHANTING") ||
@@ -108,16 +110,19 @@ public class ShulkerListener implements Listener {
                 return;
             }
 
+            // prevent the player from opening it in the crafting slots of their inventory
             if (type == InventoryType.CRAFTING && event.getRawSlot() >= 1 && event.getRawSlot() <= 4) {
                 return;
             }
 
+            // prevent the player from opening it in the inventory if they have no permission
             if ((player.getInventory() == event.getClickedInventory())) {
                 if (!main.canopenininventory || !player.hasPermission("shulkerpacks.open_in_inventory")) {
             	    return;
                 }
             }
 
+            // prevent the player from opening the shulkerbox in the result slot of an inventory (this can be done with dyes)
             if (event.getSlotType() == InventoryType.SlotType.RESULT) {
                 return;
             }
@@ -256,7 +261,7 @@ public class ShulkerListener implements Listener {
                     if (item != null) {
                         BlockStateMeta meta = (BlockStateMeta) item.getItemMeta();
                         ShulkerBox shulker = (ShulkerBox) meta.getBlockState();
-                        shulker.getInventory().setContents(main.openinventories.get(player.getUniqueId()).getContents());
+                        shulker.getInventory().setContents(main.openinventories.get(player).getContents());
                         meta.setBlockState(shulker);
                         item.setItemMeta(meta);
                         main.openshulkers.put(player, item);
@@ -317,7 +322,7 @@ public class ShulkerListener implements Listener {
                                     player.openInventory(inv);
                                     player.playSound(player.getLocation(), Sound.BLOCK_SHULKER_BOX_OPEN, main.volume, 1);
                                     main.openshulkers.put(player, item);
-                                    main.openinventories.put(player.getUniqueId(), player.getOpenInventory().getTopInventory());
+                                    main.openinventories.put(player, player.getOpenInventory().getTopInventory());
                                 }
                             }, 1);
                             return true;

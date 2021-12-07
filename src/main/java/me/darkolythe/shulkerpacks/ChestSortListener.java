@@ -16,7 +16,7 @@ public class ChestSortListener implements Listener {
         try {
             getInventoryMethod = Class.forName("de.jeff_media.chestsort.api.ChestSortEvent").getMethod("getInventory",null);
         } catch (NoSuchMethodException | ClassNotFoundException e) {
-            e.printStackTrace();
+
         }
     }
 
@@ -29,7 +29,7 @@ public class ChestSortListener implements Listener {
                 }
             });
         } catch (IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
+
         }
     };
 

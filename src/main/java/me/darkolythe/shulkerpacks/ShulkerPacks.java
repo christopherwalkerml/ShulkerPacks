@@ -26,7 +26,7 @@ public final class ShulkerPacks extends JavaPlugin {
 
     Map<Player, ItemStack> openshulkers = new HashMap<>();
     Map<Player, Boolean> fromhand = new HashMap<>();
-    Map<UUID, Inventory> openinventories = new HashMap<>();
+    Map<Player, Inventory> openinventories = new HashMap<>();
     Map<Player, Inventory> opencontainer = new HashMap<>();
     private Map<Player, Long> pvp_timer = new HashMap<>();
     boolean canopeninchests = true;
@@ -87,6 +87,10 @@ public final class ShulkerPacks extends JavaPlugin {
      */
     @Override
     public void onDisable() {
+        Iterator<Player> it = this.openinventories.keySet().iterator();
+        while (it.hasNext()) {
+            it.next().closeInventory();
+        }
         getLogger().log(Level.INFO, (prefix + ChatColor.RED + "ShulkerPacks has been disabled!"));
     }
 
