@@ -2,6 +2,8 @@ name: ShulkerPacks
 version: 1.6.0
 main: me.darkolythe.shulkerpacks.ShulkerPacks
 api-version: 1.13
+softdepend:
+  - ChestSort
 
 permissions:
   shulkerpacks.use:
