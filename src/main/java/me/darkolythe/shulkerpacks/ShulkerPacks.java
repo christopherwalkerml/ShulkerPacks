@@ -14,12 +14,6 @@ import java.util.logging.Level;
 
 public final class ShulkerPacks extends JavaPlugin {
 
-    private static ShulkerPacks instance;
-
-    {
-        instance = this;
-    }
-
     ShulkerListener shulkerlistener;
 
     String prefix = ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "[" + ChatColor.BLUE.toString() + "ShulkerPacks" + ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "] ";
@@ -38,10 +32,6 @@ public final class ShulkerPacks extends JavaPlugin {
     boolean canopeninenderchest, canopeninbarrels, canplaceshulker, canopenininventory, canopeninair;
     float volume;
 
-    public static ShulkerPacks getInstance() {
-        return instance;
-    }
-
     /*
     Sets up the plugin
      */
@@ -50,13 +40,6 @@ public final class ShulkerPacks extends JavaPlugin {
         shulkerlistener = new ShulkerListener(this);
 
         getServer().getPluginManager().registerEvents(shulkerlistener, this);
-        try {
-            Class<? extends Event> chestSortEventClass = (Class<? extends Event>) Class.forName("de.jeff_media.chestsort.api.ChestSortEvent");
-            ChestSortListener chestSortListener = new ChestSortListener();
-            getServer().getPluginManager().registerEvent(chestSortEventClass, chestSortListener, EventPriority.HIGHEST, chestSortListener.getExecutor(), this);
-        } catch (ClassNotFoundException ignored) {
-            // ChestSort is not installed
-        }
 
         saveDefaultConfig();
         canopeninchests = getConfig().getBoolean("canopeninchests");
