@@ -227,6 +227,7 @@ public class ShulkerListener implements Listener {
     public void onShulkerPlace(BlockPlaceEvent event) {
         if (event.getBlockPlaced().getType().toString().contains("SHULKER_BOX")) {
             if (!main.canplaceshulker) {
+                openInventoryIfShulker(event.getItemInHand(), event.getPlayer());
                 event.setCancelled(true);
             }
         }
