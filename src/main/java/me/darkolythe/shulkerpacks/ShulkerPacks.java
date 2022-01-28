@@ -14,6 +14,8 @@ public final class ShulkerPacks extends JavaPlugin {
 
     ShulkerListener shulkerlistener;
 
+    private static ShulkerPacks plugin;
+
     String prefix = ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "[" + ChatColor.BLUE.toString() + "ShulkerPacks" + ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "] ";
 
     static Map<Player, ItemStack> openshulkers = new HashMap<>();
@@ -25,7 +27,7 @@ public final class ShulkerPacks extends JavaPlugin {
     boolean openpreviousinv = false;
     List<String> blacklist = new ArrayList<>();
     String defaultname = ChatColor.BLUE + "Shulker Pack";
-    private boolean pvp_timer_enabled = false;
+    boolean pvp_timer_enabled = false;
     boolean shiftclicktoopen = false;
     boolean canopeninenderchest, canopeninbarrels, canplaceshulker, canopenininventory, canopeninair;
     float volume;
@@ -35,25 +37,14 @@ public final class ShulkerPacks extends JavaPlugin {
      */
     @Override
     public void onEnable() {
+        plugin = this;
         shulkerlistener = new ShulkerListener(this);
 
         getServer().getPluginManager().registerEvents(shulkerlistener, this);
 
-        saveDefaultConfig();
-        canopeninchests = getConfig().getBoolean("canopeninchests");
-        canopeninenderchest = getConfig().getBoolean("canopeninenderchest", true);
-        canopeninbarrels = getConfig().getBoolean("canopeninbarrels", true);
-        canopenininventory = getConfig().getBoolean("canopenininventory", true);
-        canplaceshulker = getConfig().getBoolean("canplaceshulker", true);
-        blacklist = getConfig().getStringList("blacklistedinventories");
-        canopeninair = getConfig().getBoolean("canopeninair", true);
-        openpreviousinv = getConfig().getBoolean("open-previous-inventory", false);
-        volume = (float) getConfig().getDouble("shulkervolume", 1.0);
-        pvp_timer_enabled = getConfig().getBoolean("disable-in-combat", true);
-        if (getConfig().getString("defaultname") != null) {
-            defaultname = ChatColor.translateAlternateColorCodes('&', getConfig().getString("defaultname"));
-        }
-        shiftclicktoopen = getConfig().getBoolean("shiftclicktoopen");
+        getCommand("shulkerpacks").setExecutor(new CommandReload());
+
+        ConfigHandler.loadConfig(this);
 
         @SuppressWarnings("unused")
 		Metrics metrics = new Metrics(this);
@@ -73,6 +64,11 @@ public final class ShulkerPacks extends JavaPlugin {
             it.next().closeInventory();
         }
         getLogger().log(Level.INFO, (prefix + ChatColor.RED + "ShulkerPacks has been disabled!"));
+    }
+
+
+    public static ShulkerPacks getInstance() {
+        return plugin;
     }
 
 

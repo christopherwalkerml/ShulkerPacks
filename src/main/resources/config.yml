@@ -1,3 +1,8 @@
+# BLACKLIST AUCTION INVENTORIES HERE
+# blacklist works as follows:
+# if you include the word "a" in the blacklist, every inventory with the letter "a" will be blocked.
+# because of this, try to be as precise as possible.
+# If your inventory contains extra characters, such as "Auction Page 8", simply blacklisting "Auction Page" will block every page
 blacklistedinventories: ["&4&lMineXChange", "test inventory"]
 
 canopeninair: true            #false will prevent users from opening shulkerboxes by clicking the air
