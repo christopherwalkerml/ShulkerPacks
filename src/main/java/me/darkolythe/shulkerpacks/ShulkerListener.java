@@ -224,9 +224,10 @@ public class ShulkerListener implements Listener {
     }
 
     @EventHandler
-    public void onShulkerPlace(BlockPlaceEvent event) {
+    public void onShulkerPlace(BlockPlaceEvent event, Player player) {
         if (event.getBlockPlaced().getType().toString().contains("SHULKER_BOX")) {
             if (!main.canplaceshulker) {
+                player.sendMessage(main.prefix + main.noplaceshulker);
                 event.setCancelled(true);
             }
         }
@@ -298,7 +299,7 @@ public class ShulkerListener implements Listener {
                 if (item.getAmount() == 1 && item.getType().toString().contains("SHULKER")) {
 
                     if (main.getPvpTimer(player)) {
-                        player.sendMessage(main.prefix + ChatColor.RED + "You cannot open shulkerboxes in combat!");
+                        player.sendMessage(main.prefix + main.notinpvp);
                         return false;
                     }
 
