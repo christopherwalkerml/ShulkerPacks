@@ -6,7 +6,7 @@
 
     <groupId>me.Darkolythe</groupId>
     <artifactId>ShulkerPacks</artifactId>
-    <version>1.6.5</version>
+    <version>1.6.6</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -27,6 +27,12 @@
     </repositories>
 
     <dependencies>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.18.20</version>
+                <scope>provided</scope>
+            </dependency>
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>

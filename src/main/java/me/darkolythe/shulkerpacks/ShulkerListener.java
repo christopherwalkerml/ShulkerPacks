@@ -8,11 +8,13 @@ import org.bukkit.block.ShulkerBox;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.inventory.*;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -22,10 +24,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShulkerListener implements Listener {
+    private OpenShulker os;
+    private ShulkerPacks plugin;
 
     public ShulkerPacks main;
+
     public ShulkerListener(ShulkerPacks plugin) {
+
         this.main = plugin; //set it equal to an instance of main
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
     /*
@@ -68,10 +75,10 @@ public class ShulkerListener implements Listener {
      */
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
-    	if (event.isCancelled()) {
-    		return;
-    	}
-    	
+        if (event.isCancelled()) {
+            return;
+        }
+
         Player player = (Player) event.getWhoClicked();
 
         if (ShulkerPacks.openshulkers.containsKey(player)) {
@@ -118,7 +125,7 @@ public class ShulkerListener implements Listener {
             // prevent the player from opening it in the inventory if they have no permission
             if ((player.getInventory() == event.getClickedInventory())) {
                 if (!main.canopenininventory || !player.hasPermission("shulkerpacks.open_in_inventory")) {
-            	    return;
+                    return;
                 }
             }
 
@@ -128,7 +135,7 @@ public class ShulkerListener implements Listener {
             }
 
             if(event.getClickedInventory() != null && event.getClickedInventory().getHolder() != null && event.getClickedInventory().getHolder().getClass().toString().endsWith(".CraftBarrel") && !main.canopeninbarrels) {
-            	return;
+                return;
             }
 
             if (!main.canopeninenderchest && type == InventoryType.ENDER_CHEST) {
@@ -225,6 +232,7 @@ public class ShulkerListener implements Listener {
 
     @EventHandler
     public void onShulkerPlace(BlockPlaceEvent event, Player player) {
+        onPlayerPlackets(event.getPlayer(), event);
         if (event.getBlockPlaced().getType().toString().contains("SHULKER_BOX")) {
             if (!main.canplaceshulker) {
                 player.sendMessage(main.prefix + main.noplaceshulker);
@@ -356,4 +364,15 @@ public class ShulkerListener implements Listener {
             }
         }, 1L, 1L);
     }
+    public void onPlayerPlackets(Player p, Cancellable c) {
+        if (p.getOpenInventory().getType() != InventoryType.SHULKER_BOX) return;
+            if(p.getOpenInventory().getTopInventory().getLocation() != null) return;
+            if(!os.doesPlayerShulkerOpen(p.getUniqueId())) return;
+            c.setCancelled(true);
+        }
+    @EventHandler
+    public void onItemFrameInteract(PlayerInteractEntityEvent e){
+        onPlayerPlackets(e.getPlayer(), e);
+    }
 }
+

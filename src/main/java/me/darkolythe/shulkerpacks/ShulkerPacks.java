@@ -19,7 +19,10 @@ public final class ShulkerPacks extends JavaPlugin {
     String prefix = ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "[" + ChatColor.BLUE.toString() + "ShulkerPacks" + ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "] ";
 
     static Map<Player, ItemStack> openshulkers = new HashMap<>();
-    Map<Player, Boolean> fromhand = new HashMap<>();
+    Map<Player, Boolean> fromhand = new HashMap<>();;
+    private HashMap<Inventory, OpenShulker> openShulkerInventories = new HashMap<>();
+    private HashMap<UUID, Long> lastOpened = new HashMap<>();
+
     Map<Player, Inventory> openinventories = new HashMap<>();
     Map<Player, Inventory> opencontainer = new HashMap<>();
     private Map<Player, Long> pvp_timer = new HashMap<>();
