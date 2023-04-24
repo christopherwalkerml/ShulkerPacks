@@ -27,11 +27,8 @@ public final class ShulkerPacks extends JavaPlugin {
     boolean openpreviousinv = false;
     List<String> blacklist = new ArrayList<>();
     String defaultname = ChatColor.BLUE + "Shulker Pack";
-<<<<<<< HEAD
     String notinpvp = ChatColor.RED +"You cannot open shulkerboxes in combat!";
     String noplaceshulker = ChatColor.RED + "you cannot place the shulker.";
-=======
->>>>>>> dced6c46672cc1e29813df6885c58ed6ab0d273e
     boolean pvp_timer_enabled = false;
     boolean shiftclicktoopen = false;
     boolean canopeninenderchest, canopeninbarrels, canplaceshulker, canopenininventory, canopeninair;

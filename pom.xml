@@ -6,11 +6,7 @@
 
     <groupId>me.Darkolythe</groupId>
     <artifactId>ShulkerPacks</artifactId>
-<<<<<<< HEAD
     <version>1.6.5</version>
-=======
-    <version>1.6.4</version>
->>>>>>> dced6c46672cc1e29813df6885c58ed6ab0d273e
     <packaging>jar</packaging>
 
     <properties>
@@ -34,7 +30,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.13.2-R0.1-SNAPSHOT</version>
+            <version>1.19.4-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -46,13 +42,14 @@
     </dependencies>
 
     <build>
+        <defaultGoal>install</defaultGoal>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>2.3.1</version>
                 <configuration>
-                    <outputDirectory>C:\Users\ChrisWalker\Desktop\1.18server\plugins</outputDirectory>
+                    <outputDirectory>C:\Users\dinob\Documents\plugins</outputDirectory>
                 </configuration>
             </plugin>
             <plugin>
