@@ -15,7 +15,7 @@ canplaceshulker: true         #false will prevent users from placing shulkerboxe
 #true will prevent users from opening shulkerboxes within 7 seconds of being hit by a player
 disable-in-combat: false
 
-defaultname: "&9Shulker Pack"
+defaultname: '&9Shulker Pack'
 shiftclicktoopen: false
 shulkervolume: 1              #0.1 is quiet, 1 is loud
 #shift click to open applies to both ingame and in inventory
@@ -23,5 +23,5 @@ shulkervolume: 1              #0.1 is quiet, 1 is loud
 open-previous-inventory: false
 
 #lang
-notinpvp: "&4You cannot open shulkerboxes in combat!"
-noplaceshulker: "&4you cannot place the shulker!"
+notinpvp: '&4You cannot open shulkerboxes in combat!'
+noplaceshulker: '&4you cannot place the shulker!'

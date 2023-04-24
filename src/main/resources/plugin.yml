@@ -1,17 +1,7 @@
 name: ShulkerPacks
-<<<<<<< HEAD
 version: 1.6.5
-=======
-version: 1.6.4
->>>>>>> dced6c46672cc1e29813df6885c58ed6ab0d273e
 main: me.darkolythe.shulkerpacks.ShulkerPacks
 api-version: 1.19
-
-commands:
-  shulkerpacks:
-    usage: /<command> reload
-    description: reloads the shulkerpacks config
-    permission: op
 
 commands:
   shulkerpacks:
