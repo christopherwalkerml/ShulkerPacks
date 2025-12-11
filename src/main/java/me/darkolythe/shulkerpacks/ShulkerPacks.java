@@ -1,6 +1,5 @@
 package me.darkolythe.shulkerpacks;
 
-import org.bstats.bukkit.Metrics;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -29,7 +28,9 @@ public final class ShulkerPacks extends JavaPlugin {
     String defaultname = ChatColor.BLUE + "Shulker Pack";
     boolean pvp_timer_enabled = false;
     boolean shiftclicktoopen = false;
-    boolean canopeninenderchest, canopeninbarrels, canplaceshulker, canopenininventory, canopeninair;
+    boolean canopeninenderchest, canopeninbarrels, canplaceshulker, canopenininventory, canopeninvirtualinventory, canopeninair;
+
+    int shulker_open_cooldown;
     float volume;
 
     /*
@@ -46,8 +47,7 @@ public final class ShulkerPacks extends JavaPlugin {
 
         ConfigHandler.loadConfig(this);
 
-        @SuppressWarnings("unused")
-		Metrics metrics = new Metrics(this);
+        //Metrics metrics = new Metrics(this);
 
         shulkerlistener.checkIfValid();
 

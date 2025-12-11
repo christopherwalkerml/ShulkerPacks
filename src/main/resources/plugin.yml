@@ -1,7 +1,8 @@
 name: ShulkerPacks
-version: 1.6.4
+version: 1.8.0
 main: me.darkolythe.shulkerpacks.ShulkerPacks
-api-version: 1.13
+api-version: 1.16
+authors: [Darkolythe,Kerm,avixk]
 
 commands:
   shulkerpacks:

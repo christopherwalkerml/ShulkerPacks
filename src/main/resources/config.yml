@@ -3,21 +3,25 @@
 # if you include the word "a" in the blacklist, every inventory with the letter "a" will be blocked.
 # because of this, try to be as precise as possible.
 # If your inventory contains extra characters, such as "Auction Page 8", simply blacklisting "Auction Page" will block every page
-blacklistedinventories: ["&4&lMineXChange", "test inventory"]
+blacklistedinventories: ["&4&lMineXChange", "test inventory"," Contents","Auction","Preview","DeathSign"," Item", "&cTrade with","Editing","Grave"]
 
 canopeninair: true            #false will prevent users from opening shulkerboxes by clicking the air
 canopenininventory: true      #false will prevent users from opening shulkerboxes in their inventory
+canopeninvirtualinventory: true #false will prevent users from opening shulkerboxes in virtual inventories
 canopeninchests: true         #false will prevent users from opening shulkerboxes in chests
 canopeninenderchest: true     #false will prevent users from opening shulkerboxes in enderchests
 canopeninbarrels: true        #false will prevent users from opening shulkerboxes in barrels
 canplaceshulker: true         #false will prevent users from placing shulkerboxes by accident
 
-#true will prevent users from opening shulkerboxes within 7 seconds of being hit by a player
+# true will prevent users from opening shulkerboxes within 7 seconds of being hit by a player
 disable-in-combat: false
 
-defaultname: "&9Shulker Pack"
-shiftclicktoopen: false
-shulkervolume: 1              #0.1 is quiet, 1 is loud
-#shift click to open applies to both ingame and in inventory
+# cooldown for opening shulkers in milliseconds
+shulker_open_cooldown: 100
 
+defaultname: "&0Shulker Box"
+shiftclicktoopen: false # applies to both ingame and in inventory
+shulkervolume: 1              #0.1 is quiet, 1 is loud
+
+# go to previous menu instead of just closing the shulker
 open-previous-inventory: false
